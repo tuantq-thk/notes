@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Run phpstan analysis and capture the result
+analysis_result=$(docker exec mens_est_mypage-php php vendor/bin/phpstan analyse ./app ./bootstrap ./config ./database ./routes --memory-limit=1G --configuration ./vendor/pf2/mensestmypage-precommit-config/phpstan.neon 2>&1)
+
+# Print the analysis result
+echo "$analysis_result"
+
+build_result=$(docker exec mens_est_mypage-php npm run build 2>&1)
+
+echo "$build_result"
+
+# Execute phpcsfixer
+phpcsfixer_result=$(docker exec mens_est_mypage-php php vendor/bin/php-cs-fixer fix ./app ./bootstrap ./config ./database ./routes --config="./vendor/pf2/mensestmypage-precommit-config/.php-cs-fixer.dist.php" --using-cache no 2>&1)
+
+# Print phpcsfixer_result
+echo "$phpcsfixer_result"
+
+# Execute eslint
+eslint_result=$(docker exec mens_est_mypage-php npx eslint --ext .tsx resources/js/ 2>&1)
+
+# Print eslint_result
+echo "$eslint_result"
+
+# Execute prettier
+prettier_result=$(docker exec mens_est_mypage-php npm run prettier 2>&1)
+
+# Print prettier_result
+echo "$prettier_result"
+
+if echo "$build_result" | grep -q "ERROR"; then
+    echo "Build failed."
+    echo "Commit rejected."
+    exit 1 # Exit with an error status
+else
+    echo "Build passed."
+    echo "Commit allowed"
+fi
+
+if echo "$phpcsfixer_result" | grep -q "Fixed 0"; then
+    echo "php-cs-fixer passed."
+    echo "Commit allowed."
+else
+    echo 'php-cs-fixer fixes some files or there is an issue with end of files newlines.'
+    echo 'Please include your commits.'
+    exit 1  # Exit with an error status
+fi
+
+# Check if the analysis result contains the line "[OK] No errors"
+if echo "$analysis_result" | grep -q "\[OK\] No errors"; then
+    echo "phpstan analysis passed."
+    echo "Commit allowed."
+else
+    echo "phpstan analysis found errors."
+    echo "Commit rejected."
+    exit 1  # Exit with an error status
+fi
+
+if echo "$eslint_result" | grep -q "✖"; then
+    echo "eslint analysis found errors"
+    echo "Commit rejected."
+    exit 1 # Exit with an error status
+else
+    echo "eslint analysis passed."
+    echo "Commit allowed"
+fi
+
+if echo "$prettier_result" | grep -q "s$"; then
+    echo "prettier fixes some files or there is an issue with end of files newlines."
+    echo "Commit rejected."
+    exit 1 # Exit with an error status
+else
+    echo "prettier passed."
+    echo "Commit allowed"
+fi
+
+exit 0  # Exit with a success status
