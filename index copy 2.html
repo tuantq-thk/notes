@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <!-- <link rel="stylesheet" href="./assets/reset.css" /> -->
+    <link rel="stylesheet" href="./assets/header.css" />
+    <link rel="stylesheet" href="./assets/aside.css" />
+    <link rel="stylesheet" href="./assets/main.css" />
+    <link rel="stylesheet" href="./assets/footer.css" />
+    <!-- Font Awesome Cdn Link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+
+    <style>
+      /* Reset some basic styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      
+      @media screen and (max-width: 768px) {
+        .aside {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header id="header">
+        <h1>header here</h1>
+      </header>
+
+      <aside id="aside" class="aside">
+        <h1>Sidebar here</h1>
+        <ul>
+          <li>test</li>
+        </ul>
+      </aside>
+
+      <main id="main" class="main">
+        <h1>content here</h1>
+      </main>
+
+      <footer id="footer">
+        <h1>footer here</h1>
+      </footer>
+    </div>
+  </body>
+</html>

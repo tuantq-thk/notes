@@ -1,0 +1,124 @@
+/* Reset some basic styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Common styles */
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Header */
+#header {
+  position: relative;
+  margin-left: 250px;
+  background: #fff;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: margin-left 0.3s ease;
+  height: 65px;
+}
+
+/* Aside */
+#aside {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin-left: 0;
+  width: 250px;
+  z-index: 10;
+  background: #fff;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease;
+}
+#aside h1 {
+  height: 65px;
+}
+#aside nav {
+  height: 100vh;
+  overflow: scroll;
+  background-color:#ccc;
+}
+
+#aside ul li {
+  display: flex;
+  padding: 15px 10px;
+  margin: 15px 5px;
+  gap: 10px;
+  list-style: none;
+  align-items: center;
+  cursor: pointer;
+  background-color: aliceblue;
+  transition: margin-left 0.3s ease;
+  overflow: hidden;
+}
+
+#aside h1 {
+  padding: 20px 10px;
+  background-color: azure;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* Main */
+#main {
+  display: flex;
+  position: relative;
+  margin-left: 250px;
+  margin-top: 15px;
+  background: #fff;
+  align-items: center;
+  min-height: calc(100vh - 140px);
+  justify-content: space-between;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease;
+}
+
+/* Footer */
+#footer {
+  display: flex;
+  position: relative;
+  height: 45px;
+  margin-left: 250px;
+  margin-top: 15px;
+  justify-content: space-between;
+  background: #fff;
+  align-items: center;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+  #header {
+    margin-left: 0;
+  }
+  #main {
+    margin-left: 0;
+  }
+  #footer {
+    margin-left: 0;
+  }
+  #aside {
+    display: none;
+  }
+  /* Container */
+  .aside-visible #header,
+  .aside-visible #main,
+  .aside-visible #footer {
+    margin-left: 250px;
+  }
+  .aside-visible #aside {
+    display: block;
+  }
+}
