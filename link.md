@@ -1,0 +1,1 @@
+1. [link 1](https://medium.com/@theshreif/simplify-external-api-integrations-in-laravel-using-service-modules-56493a651a0e)
